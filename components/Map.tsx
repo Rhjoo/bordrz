@@ -17,7 +17,7 @@ const Map = () => {
       // console.log(status);
       if (status !== "granted") {
         console.log("PERMISSION NOT GRANTED!");
-        // setError('Permission not granted');
+        // TODO: create a component to say user needs to give permission
         setPermission(false);
       }
     })();
@@ -67,7 +67,7 @@ const Map = () => {
       longitude: location.longitude,
       latitude: location.latitude,
     });
-    console.log(reverseGeocodeLocation);
+    // console.log(reverseGeocodeLocation);
     setAddress(reverseGeocodeLocation);
   };
 
