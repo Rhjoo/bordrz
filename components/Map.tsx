@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Text, TouchableOpacity, StyleSheet } from "react-native";
 import * as Location from "expo-location";
+import MapView from 'react-native-maps';
 
 const Map = () => {
   const [location, setLocation] = useState({ latitude: 0, longitude: 0 });
@@ -78,6 +79,7 @@ const Map = () => {
 
   return (
     <>
+      <MapView style={styles.map} />
       <Text>Hi, I'm Map component</Text>
       {main}
     </>
@@ -91,6 +93,9 @@ const styles = StyleSheet.create({
     borderColor: "black",
     backgroundColor: "#DDDDDD",
   },
+  map: {
+    height: 300,
+  }
 });
 
 export default Map;
