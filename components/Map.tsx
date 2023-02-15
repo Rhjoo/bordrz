@@ -25,7 +25,7 @@ const Map = () => {
 
   const main = permission ? (
     <>
-      // TODO: Put a map here
+      {/* TODO: Put a map here */}
       <Text>
         {location.latitude} {location.longitude}
       </Text>
@@ -38,8 +38,8 @@ const Map = () => {
         <Text>Get Your Coordinates</Text>
       </TouchableOpacity>
       <Text>{JSON.stringify(address, null, 2)}</Text>
-      // TODO: instead of JSON, turn it into list
-      // TODO: once pressed, the button should be grayed out, maybe some spinning animation?
+      {/* TODO: instead of JSON, turn it into list
+          TODO: once pressed, the button should be grayed out, maybe some spinning animation? */}
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
