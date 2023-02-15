@@ -79,8 +79,8 @@ const Map = () => {
 
   return (
     <>
-      <MapView style={styles.map} />
       <Text>Hi, I'm Map component</Text>
+      <MapView style={styles.map} />
       {main}
     </>
   );
@@ -94,6 +94,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#DDDDDD",
   },
   map: {
+    width: "100%",
     height: 300,
   }
 });
