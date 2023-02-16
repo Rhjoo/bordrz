@@ -79,7 +79,7 @@ const Map = () => {
 
   return (
     <>
-      <Text>Hi, I'm Map component</Text>
+      {/* <Text>Hi, I'm Map component</Text> */}
       <MapView style={styles.map} 
         initialRegion={{
           latitude: 37.33233,
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
   },
   map: {
     width: "100%",
-    height: 300,
+    height: "40%",
   }
 });
 
