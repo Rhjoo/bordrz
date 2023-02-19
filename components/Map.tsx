@@ -27,29 +27,28 @@ const Map = () => {
 
   const main = permission ? (
     <>
-      {/* TODO: Put a map here */}
-      <Text>
-        {location.latitude} {location.longitude}
-      </Text>
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={styles.button}
         onPress={() => {
           getLocation();
         }}
-      >
+        >
         <Text>Get Your Coordinates</Text>
-      </TouchableOpacity>
-      <Text>{JSON.stringify(address, null, 2)}</Text>
-      {/* TODO: instead of JSON, turn it into list
-          TODO: once pressed, the button should be grayed out, maybe some spinning animation? */}
+      </TouchableOpacity> */}
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
-          getGeocode();
+          getLocationAndGeocode();
         }}
-      >
+        >
         <Text>Get Your Location</Text>
       </TouchableOpacity>
+          <Text>
+            {location.latitude} {location.longitude}
+          </Text>
+      <Text>{JSON.stringify(address, null, 2)}</Text>
+      {/* TODO: instead of JSON, turn it into list
+          TODO: once pressed, the button should be grayed out, maybe some spinning animation? */}
     </>
   ) : (
     <>
@@ -77,6 +76,17 @@ const Map = () => {
     // console.log(reverseGeocodeLocation);
     setAddress(reverseGeocodeLocation);
   };
+
+  const getLocationAndGeocode = async () => {
+    getLocation();
+    let positionInsideNewCode = await Location.getCurrentPositionAsync({});
+    const reverseGeocodeLocation = await Location.reverseGeocodeAsync({
+      longitude: positionInsideNewCode.coords.longitude,
+      latitude: positionInsideNewCode.coords.latitude,
+    });
+    // console.log(reverseGeocodeLocation);
+    setAddress(reverseGeocodeLocation);
+  }
 
   return (
     <>
