@@ -81,9 +81,10 @@ const Map = () => {
     <>
       {/* <Text>Hi, I'm Map component</Text> */}
       <MapView style={styles.map} 
-        initialRegion={{
-          latitude: 37.33233,
-          longitude: -122.03121,
+        showsUserLocation={true}
+        region={{
+          latitude: location.latitude,
+          longitude: location.longitude,
           latitudeDelta: 0.01,
           longitudeDelta: 0.01
         }}
