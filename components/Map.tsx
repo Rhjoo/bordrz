@@ -78,8 +78,13 @@ const Map = () => {
   };
 
   const getLocationAndGeocode = async () => {
-    getLocation();
+    // getLocation();
     let positionInsideNewCode = await Location.getCurrentPositionAsync({});
+    setLocation({
+      latitude: positionInsideNewCode.coords.latitude,
+      longitude: positionInsideNewCode.coords.longitude,
+    });
+    setDelta(0.01);
     const reverseGeocodeLocation = await Location.reverseGeocodeAsync({
       longitude: positionInsideNewCode.coords.longitude,
       latitude: positionInsideNewCode.coords.latitude,
