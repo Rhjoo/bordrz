@@ -5,6 +5,7 @@ import MapView from 'react-native-maps';
 
 const Map = () => {
   const [location, setLocation] = useState({ latitude: 0, longitude: 0 });
+  const [delta, setDelta] = useState(180);
   const [address, setAddress] = useState({});
 
   const [permission, setPermission] = useState(true);
@@ -64,7 +65,7 @@ const Map = () => {
       latitude: position.coords.latitude,
       longitude: position.coords.longitude,
     });
-
+    setDelta(0.01);
     // console.log("getLocation() ran");
   };
 
@@ -85,8 +86,8 @@ const Map = () => {
         region={{
           latitude: location.latitude,
           longitude: location.longitude,
-          latitudeDelta: 0.01,
-          longitudeDelta: 0.01
+          latitudeDelta: delta,
+          longitudeDelta: delta
         }}
       />
       {main}
