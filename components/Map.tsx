@@ -46,9 +46,8 @@ const Map = () => {
     </>
   );
   
-  const list = Object.keys(address).length !== 0 ? (
+  const list = address.length !== 0 ? (
     <>
-      {/* @ts-ignore */}
       {console.log(address)}
       {/* @ts-ignore */}
       <Text>{address[0].city}</Text>
