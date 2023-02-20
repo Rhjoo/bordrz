@@ -19,7 +19,6 @@ const Map = () => {
       // console.log(status);
       if (status !== "granted") {
         console.log("PERMISSION NOT GRANTED!");
-        // TODO: create a component to say user needs to give permission
         setPermission(false);
       }
     })();
@@ -27,14 +26,6 @@ const Map = () => {
 
   const main = permission ? (
     <>
-      {/* <TouchableOpacity
-        style={styles.button}
-        onPress={() => {
-          getLocation();
-        }}
-        >
-        <Text>Get Your Coordinates</Text>
-      </TouchableOpacity> */}
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
@@ -43,9 +34,7 @@ const Map = () => {
         >
         <Text>Get Your Location</Text>
       </TouchableOpacity>
-          <Text>
-            {location.latitude} {location.longitude}
-          </Text>
+      <Text>{location.latitude} {location.longitude}</Text>
       <Text>{JSON.stringify(address, null, 2)}</Text>
       {/* TODO: instead of JSON, turn it into list
           TODO: once pressed, the button should be grayed out, maybe some spinning animation? */}
@@ -56,46 +45,22 @@ const Map = () => {
     </>
   );
 
-  // TODO: Need to combine getLocation and getGeocode, so you don't display 
-  // TODO: the coordinates
-  const getLocation = async () => {
+  const getLocationAndGeocode = async () => {
     let position = await Location.getCurrentPositionAsync({});
     setLocation({
       latitude: position.coords.latitude,
       longitude: position.coords.longitude,
     });
     setDelta(0.01);
-    // console.log("getLocation() ran");
-  };
-
-  const getGeocode = async () => {
     const reverseGeocodeLocation = await Location.reverseGeocodeAsync({
-      longitude: location.longitude,
-      latitude: location.latitude,
+      longitude: position.coords.longitude,
+      latitude: position.coords.latitude,
     });
-    // console.log(reverseGeocodeLocation);
-    setAddress(reverseGeocodeLocation);
-  };
-
-  const getLocationAndGeocode = async () => {
-    // getLocation();
-    let positionInsideNewCode = await Location.getCurrentPositionAsync({});
-    setLocation({
-      latitude: positionInsideNewCode.coords.latitude,
-      longitude: positionInsideNewCode.coords.longitude,
-    });
-    setDelta(0.01);
-    const reverseGeocodeLocation = await Location.reverseGeocodeAsync({
-      longitude: positionInsideNewCode.coords.longitude,
-      latitude: positionInsideNewCode.coords.latitude,
-    });
-    // console.log(reverseGeocodeLocation);
     setAddress(reverseGeocodeLocation);
   }
 
   return (
     <>
-      {/* <Text>Hi, I'm Map component</Text> */}
       <MapView style={styles.map} 
         showsUserLocation={true}
         region={{
