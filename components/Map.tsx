@@ -3,10 +3,12 @@ import { Text, TouchableOpacity, StyleSheet } from "react-native";
 import * as Location from "expo-location";
 import MapView from 'react-native-maps';
 
+type Address = [];
+
 const Map = () => {
   const [location, setLocation] = useState({ latitude: 0, longitude: 0 });
   const [delta, setDelta] = useState(180);
-  const [address, setAddress] = useState({});
+  const [address, setAddress] = useState<Address>([]);
 
   const [permission, setPermission] = useState(true);
 
@@ -37,6 +39,17 @@ const Map = () => {
       {/*TODO: once pressed, the button should be grayed out, maybe some spinning animation? */}
       {/* <Text>{location.latitude} {location.longitude}</Text> */}
       {/* <Text>{JSON.stringify(address, null, 2)}</Text> */}
+ </>
+  ) : (
+    <>
+      <Text>Please allow location permission in the settings</Text>
+    </>
+  );
+  
+  const list = Object.keys(address).length !== 0 ? (
+    <>
+      {/* @ts-ignore */}
+      {console.log(address)}
       {/* @ts-ignore */}
       <Text>{address[0].city}</Text>
       {/* @ts-ignore */}
@@ -47,12 +60,12 @@ const Map = () => {
       <Text>{address[0].region}</Text>
       {/* @ts-ignore */}
       <Text>{address[0].country}</Text>
- </>
+    </>
   ) : (
     <>
-      <Text>Please allow location permission in the settings</Text>
+      <Text>Empty list</Text>
     </>
-  );
+  )
 
   const getLocationAndGeocode = async () => {
     let position = await Location.getCurrentPositionAsync({});
@@ -80,6 +93,7 @@ const Map = () => {
         }}
       />
       {main}
+      {list}
     </>
   );
 };
