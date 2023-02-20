@@ -34,11 +34,20 @@ const Map = () => {
         >
         <Text>Get Your Location</Text>
       </TouchableOpacity>
-      <Text>{location.latitude} {location.longitude}</Text>
-      <Text>{JSON.stringify(address, null, 2)}</Text>
-      {/* TODO: instead of JSON, turn it into list
-          TODO: once pressed, the button should be grayed out, maybe some spinning animation? */}
-    </>
+      {/*TODO: once pressed, the button should be grayed out, maybe some spinning animation? */}
+      {/* <Text>{location.latitude} {location.longitude}</Text> */}
+      {/* <Text>{JSON.stringify(address, null, 2)}</Text> */}
+      {/* @ts-ignore */}
+      <Text>{address[0].city}</Text>
+      {/* @ts-ignore */}
+      <Text>{address[0].postalCode}</Text>
+      {/* @ts-ignore */}
+      <Text>{address[0].subregion}</Text>
+      {/* @ts-ignore */}
+      <Text>{address[0].region}</Text>
+      {/* @ts-ignore */}
+      <Text>{address[0].country}</Text>
+ </>
   ) : (
     <>
       <Text>Please allow location permission in the settings</Text>
