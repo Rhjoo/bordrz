@@ -3,13 +3,10 @@ import { Text, TouchableOpacity, StyleSheet } from "react-native";
 import * as Location from "expo-location";
 import MapView from 'react-native-maps';
 
-type Address = [];
-
 const Map = () => {
   const [location, setLocation] = useState({ latitude: 0, longitude: 0 });
   const [delta, setDelta] = useState(180);
-  const [address, setAddress] = useState<Address>([]);
-
+  const [address, setAddress] = useState<Location.LocationGeocodedAddress[]>([]);
   const [permission, setPermission] = useState(true);
 
   useEffect(() => {
@@ -49,15 +46,11 @@ const Map = () => {
   const list = address.length !== 0 ? (
     <>
       {console.log(address)}
-      {/* @ts-ignore */}
+      
       <Text>{address[0].city}</Text>
-      {/* @ts-ignore */}
       <Text>{address[0].postalCode}</Text>
-      {/* @ts-ignore */}
       <Text>{address[0].subregion}</Text>
-      {/* @ts-ignore */}
       <Text>{address[0].region}</Text>
-      {/* @ts-ignore */}
       <Text>{address[0].country}</Text>
     </>
   ) : (
@@ -73,11 +66,11 @@ const Map = () => {
       longitude: position.coords.longitude,
     });
     setDelta(0.01);
-    const reverseGeocodeLocation = await Location.reverseGeocodeAsync({
+    const locationGeocodedAddress = await Location.reverseGeocodeAsync({
       longitude: position.coords.longitude,
       latitude: position.coords.latitude,
     });
-    setAddress(reverseGeocodeLocation);
+    setAddress(locationGeocodedAddress);
   }
 
   return (
