@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Text, TouchableOpacity, StyleSheet } from "react-native";
 import * as Location from "expo-location";
-import MapView from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 
 const Map = () => {
   const [location, setLocation] = useState({ latitude: 0, longitude: 0 });
@@ -83,7 +83,15 @@ const Map = () => {
           latitudeDelta: delta,
           longitudeDelta: delta
         }}
-      />
+      >
+        <Marker coordinate={{
+          latitude: location.latitude,
+          longitude: location.longitude,
+          // @ts-ignore
+          latitudeDelta: delta,
+          longitudeDelta: delta
+        }} />
+      </MapView>
       {main}
       {list}
     </>
