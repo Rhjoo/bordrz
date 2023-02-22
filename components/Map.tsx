@@ -23,7 +23,7 @@ const Map = () => {
     })();
   }, []);
 
-  const main = permission ? (
+  const button = permission ? (
     <>
       <TouchableOpacity
         style={styles.button}
@@ -92,7 +92,7 @@ const Map = () => {
           longitudeDelta: delta
         }} />
       </MapView>
-      {main}
+      {button}
       {list}
     </>
   );
