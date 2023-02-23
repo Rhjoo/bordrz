@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
 import { Text, TouchableOpacity, StyleSheet } from "react-native";
 import * as Location from "expo-location";
-import MapView, { Marker } from 'react-native-maps';
+import MapView, { Marker, Polygon } from 'react-native-maps';
 
 const Map = () => {
   const [location, setLocation] = useState({ latitude: 0, longitude: 0 });
   const [delta, setDelta] = useState(180);
   const [address, setAddress] = useState<Location.LocationGeocodedAddress[]>([]);
   const [permission, setPermission] = useState(true);
+  const [borders, setBorders] = useState([]);
 
   useEffect(() => {
     // to use async inside useEffect, use async function inside
@@ -36,6 +37,9 @@ const Map = () => {
       {/*TODO: once pressed, the button should be grayed out, maybe some spinning animation? */}
       {/* <Text>{location.latitude} {location.longitude}</Text> */}
       {/* <Text>{JSON.stringify(address, null, 2)}</Text> */}
+      <TouchableOpacity style={styles.button} onPress={() => getBorders()}>
+        <Text style={styles.text}>Put border</Text>
+      </TouchableOpacity>
  </>
   ) : (
     <>
@@ -73,6 +77,32 @@ const Map = () => {
     setAddress(locationGeocodedAddress);
   }
 
+  const getBorders = () => {
+    try {
+      fetch(
+        `https://nominatim.openstreetmap.org/search.php?q=${address[0].city}+${address[0].region}&polygon_geojson=1&format=json`
+      )
+        .then(response => {
+          return response.json();
+        })
+        .then(data => {
+          return data[0].geojson.coordinates[0].map(function(array: any) {
+            let object = {};
+            object = {latitude: array[1], longitude: array[0]};
+            return object;
+          });
+        })
+        .then(result => {
+          setBorders(result);
+          // setError(null);
+        })
+    } 
+    catch {
+      console.log('There was an error fetching borders');
+      // setError('There was an error fetching borders');
+    }
+  };
+
   return (
     <>
       <MapView style={styles.map} 
@@ -91,6 +121,7 @@ const Map = () => {
           latitudeDelta: delta,
           longitudeDelta: delta
         }} />
+        <Polygon coordinates={borders} fillColor="rgba(255, 0, 0, 0.2)" strokeColor={"red"} strokeWidth={1} />
       </MapView>
       {button}
       {list}
