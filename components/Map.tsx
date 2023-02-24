@@ -38,7 +38,7 @@ const Map = () => {
       {/* <Text>{location.latitude} {location.longitude}</Text> */}
       {/* <Text>{JSON.stringify(address, null, 2)}</Text> */}
       <TouchableOpacity style={styles.button} onPress={() => getBorders()}>
-        <Text style={styles.text}>Put border</Text>
+        <Text style={styles.text}>Border On and Off</Text>
       </TouchableOpacity>
  </>
   ) : (
@@ -78,29 +78,33 @@ const Map = () => {
   }
 
   const getBorders = () => {
-    try {
-      fetch(
-        `https://nominatim.openstreetmap.org/search.php?q=${address[0].city}+${address[0].region}&polygon_geojson=1&format=json`
-      )
-        .then(response => {
-          return response.json();
-        })
-        .then(data => {
-          return data[0].geojson.coordinates[0].map(function(array: any) {
-            let object = {};
-            object = {latitude: array[1], longitude: array[0]};
-            return object;
-          });
-        })
-        .then(result => {
-          setBorders(result);
-          // setError(null);
-        })
-    } 
-    catch {
-      console.log('There was an error fetching borders');
-      // setError('There was an error fetching borders');
-    }
+    if (borders.length === 0) {
+      try {
+        fetch(
+          `https://nominatim.openstreetmap.org/search.php?q=${address[0].city}+${address[0].region}&polygon_geojson=1&format=json`
+          )
+          .then(response => {
+            return response.json();
+          })
+          .then(data => {
+            return data[0].geojson.coordinates[0].map(function(array: any) {
+              let object = {};
+              object = {latitude: array[1], longitude: array[0]};
+              return object;
+            });
+          })
+          .then(result => {
+            setBorders(result);
+            // setError(null);
+          })
+        } 
+        catch {
+          console.log('There was an error fetching borders');
+          // setError('There was an error fetching borders');
+        }
+      } else {
+        setBorders([])
+      }
   };
 
   return (
