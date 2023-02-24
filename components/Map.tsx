@@ -9,6 +9,7 @@ const Map = () => {
   const [address, setAddress] = useState<Location.LocationGeocodedAddress[]>([]);
   const [permission, setPermission] = useState(true);
   const [borders, setBorders] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     // to use async inside useEffect, use async function inside
@@ -31,6 +32,7 @@ const Map = () => {
         onPress={() => {
           getLocationAndGeocode();
         }}
+        disabled={loading}
         >
         <Text style={styles.text}>Get Your Location</Text>
       </TouchableOpacity>
@@ -64,6 +66,7 @@ const Map = () => {
   )
 
   const getLocationAndGeocode = async () => {
+    setLoading(true);
     let position = await Location.getCurrentPositionAsync({});
     setLocation({
       latitude: position.coords.latitude,
@@ -75,6 +78,7 @@ const Map = () => {
       latitude: position.coords.latitude,
     });
     setAddress(locationGeocodedAddress);
+    setLoading(false);
   }
 
   const getBorders = () => {
